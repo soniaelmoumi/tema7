@@ -10,35 +10,24 @@
 
 <body>
 
-    <p>Hvad er længden?</p>
-    <input type="text" id="længde">
-    <p>Hvad er bredden?</p>
-    <input type="text" id="bredde">
-    <button>Klik og beregn arealet, kig i konsollen</button>
-
 
     <script>
-        document.querySelector("button").addEventListener("click", buttonClicked);
 
-        function buttonClicked() {
-            let længde = document.querySelector("#længde").value;
-            let bredde = document.querySelector("#bredde").value;
+        let time = new Date().getHours();
 
-            let a = areal(længde,bredde);
-
-            let resultat ;
-            if (isNaN(a)){
-                resultat = "Det er ikke et tal, prøv igen!";
-            } else if(a <= 0){
-                resultat = "arealet er mindre end nul! Prøv igen"
-            } else {
-                resultat = `Arealet er ${a}`;
-            }
-                console.log(resultat);
+        if (time < 6){
+            console.log("Godnat!");
+        } else if (time < 11){
+            console.log("Godmorgen!");
+        } else if (time < 19){
+            console.log("Goddag!");
+        } else {
+            console.log("Godaften!")
         }
 
-        function areal(l, b) {
-            return l * b;
-        }
+
+
+
+
     </script>
 </body></html>
