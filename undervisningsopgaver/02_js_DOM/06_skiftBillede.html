@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="01_style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Titel</h1>
+    </header>
+    <main>
+        <h2>Undertitel</h2>
+        <section>
+            <article class="article1">
+                <img src="https://placeimg.com/640/480/arch" alt="image" id="image1">
+                <h3>Article 1</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit optio ipsa iusto, nesciunt eos modi adipisci reprehenderit esse perferendis expedita, placeat molestias numquam molestiae veritatis similique voluptatum. Nam, sequi minima.</p>
+            </article>
+            <article class="article2">
+                <img src="https://placeimg.com/640/480/any" alt="image">
+                <h3>Article 2</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit delectus odio iure amet repellat possimus cumque sapiente. Ut architecto reiciendis amet quaerat, quas, quos sit atque nihil a, nulla explicabo.</p>
+            </article>
+        </section>
+    </main>
+    <footer>
+        <p>This is the footer</p>
+    </footer>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start(){
+            console.log("DOM er loadet");
+
+
+        const pic1 = document.querySelector("article:first-child img");
+        console.log(pic1);
+        pic1.src = "code_image.jpg";
+        pic1.alt = "kode billede";
+
+        const pic2 = document.querySelector("article:nth-child(2) img");
+        console.log(pic2);
+        pic2.src = "stock_billede.jpg";
+        pic2.alt = "stock billede af computer";
+
+        let mainSection = document.querySelector("section");
+
+        let newArticle = document.createElement("article");
+
+        let overskrift = document.createElement("h3");
+
+        let overskriftText = document.createTextNode("Article 3");
+
+        let newP = document.createElement("p");
+        newP.textContent = "Hej Hej";
+
+        let newImg = document.createElement("img");
+        newImg.src="code_image.jpg";
+
+        mainSection.appendChild(newArticle);
+        overskrift.appendChild(overskriftText);
+        newArticle.appendChild(newImg);
+        newArticle.appendChild(overskrift);
+        newArticle.appendChild(newP);
+
+
+            let tilfældigtTal = Math.round(Math.random() * 10);
+            let element = document.querySelector("#image1");
+
+            element.addEventListener("click", skiftBillede);
+
+            function skiftBillede(){
+                image1.src = "https://placeimg.com/640/480/arch"+tilfældigtTal;
+                console.log("billede er skiftet")
+            }
+}
+
+
+
+
+    </script>
+</body></html>
