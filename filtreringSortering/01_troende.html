@@ -10,13 +10,14 @@
     <link rel="stylesheet" href="">
     <style>
         img {
-            width: 100%
+            width: 100%;
         }
 
         section {
-            padding: 5px;
+            padding: 30px;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            grid-template-rows: 1fr 1fr 1fr 1fr;
             grid-gap: 20px;
         }
 
@@ -24,13 +25,16 @@
             border: 1px solid black;
         }
 
-        h2{
+        p {
             text-align: center;
         }
 
-        p{
+        h2 {
             text-align: center;
         }
+
+
+
     </style>
 </head>
 
@@ -38,18 +42,32 @@
 
 <body>
     <template>
-       <article>
-        <h2></h2>
-        <img class="billede">
-        <p class="fornavn"></p>
-        <p class="efternavn"></p>
-        <p class="fødselsdag"></p>
-        <p class="hobby"></p>
-        <p class="troende"></p>
+        <article>
+
+
+
+            <h2></h2>
+            <img class="billede">
+            <p class="fornavn"></p>
+            <p class="efternavn"></p>
+            <p class="fødselsdag"></p>
+            <p class="hobby"></p>
+            <p class="troende"></p>
+
+
+
         </article>
+
+
+
     </template>
+
+
+
     <main>
         <section id="personer">
+
+
 
         </section>
     </main>
@@ -69,31 +87,61 @@
 
 
 
+        document.addEventListener("DOMContentLoaded", start)
+        let personer;
+        let filter = "ja";
+
+
+
+        function start() {
+            console.log("start");
+            hentData();
+        }
+
+
+
         async function hentData() {
             const resspons = await fetch(url, options);
-            const json = await resspons.json();
-            vis(json);
+            const personer = await resspons.json();
+            //personer = await JSONData.json();
+            console.log("Personer", personer);
+            //console.log("json: ", json);
+
+
+
+            vis(personer);
+
+
+
         }
 
 
 
         function vis(json) {
-            console.log(json);
+            console.log("vis");
             json.forEach(person => {
-                const klon = template.cloneNode(true);
-                klon.querySelector(".billede").src = medieurl + person.billede;
-                klon.querySelector("h2").textContent = person.titel;
-                klon.querySelector(".fornavn").textContent = person.navn;
-                klon.querySelector(".efternavn").textContent = person.efternavn;
-                klon.querySelector(".fødselsdag").textContent = person.fødselsdag;
-                klon.querySelector(".hobby").textContent = person.hobby;
-                klon.querySelector(".troende").textContent = person.troende;
-                sektion.appendChild(klon);
+                if (filter == person.troende) {
+                    const klon = template.cloneNode(true);
+                    klon.querySelector(".billede").src = medieurl + person.billede;
+                    klon.querySelector("h2").textContent = person.titel;
+                    klon.querySelector(".fornavn").textContent = person.navn;
+                    klon.querySelector(".efternavn").textContent = person.efternavn;
+                    klon.querySelector(".fødselsdag").textContent = person.fødselsdag;
+                    klon.querySelector(".hobby").textContent = person.hobby;
+                    klon.querySelector(".troende").textContent = person.troende;
+                    sektion.appendChild(klon);
+                }
+
+
+
             })
         }
 
 
 
-        hentData();
     </script>
-</body></html>
+</body>
+
+
+
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="da">
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persongalleri</title>
+    <link rel="stylesheet" href="">
+    <style>
+        img {
+            width: 100%;
+        }
+
+        section {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+            grid-gap: 20px;
+        }
+
+        article {
+            border: 1px solid black;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        nav {
+            float: none;
+  position: absolute;
+  top: 2%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+            padding: 10px;
+        }
+
+        .valgt{
+            background-color: red;
+        }
+
+
+
+    </style>
+</head>
+
+
+
+<body>
+   <header>
+       <nav>
+           <button data-troende="alle" class="valgt">Alle</button>
+           <button data-troende="ja" >Troende</button>
+           <button data-troende="nej">Ikke Troende</button>
+           <button data-troende="tvivler">Tvivler</button>
+       </nav>
+   </header>
+    <template>
+        <article>
+
+
+
+            <h2></h2>
+            <img class="billede">
+            <p class="fornavn"></p>
+            <p class="efternavn"></p>
+            <p class="fødselsdag"></p>
+            <p class="hobby"></p>
+            <p class="troende"></p>
+
+
+
+        </article>
+
+
+
+    </template>
+
+
+
+    <main>
+        <section id="personer">
+
+
+
+        </section>
+    </main>
+
+
+
+    <script>
+        const url = "https://persongalleri-5d3e.restdb.io/rest/persongalleri";
+        const medieurl = "https://persongalleri-5d3e.restdb.io/media/";
+        const sektion = document.querySelector("#personer");
+        const template = document.querySelector("template").content;
+        const options = {
+            headers: {
+                'x-apikey': "600fe9211346a1524ff12e31"
+            }
+        };
+
+
+
+        document.addEventListener("DOMContentLoaded", start)
+        let personer;
+        let filter = "alle";
+
+
+
+        function start() {
+            console.log("start");
+            const filterKnapper = document.querySelectorAll("nav button");
+            filterKnapper.forEach(knap => knap.addEventListener("click", filtrerPersoner));
+            hentData();
+        }
+
+        function filtrerPersoner(){
+            filter = this.dataset.troende;
+
+            vis();
+
+        }
+
+
+
+        async function hentData() {
+            const resspons = await fetch(url, options);
+            personer = await resspons.json();
+            //personer = await JSONData.json();
+            console.log("Personer", personer);
+            //console.log("json: ", json);
+
+
+
+            vis();
+
+
+
+        }
+
+
+
+        function vis() {
+            console.log("vis");
+            sektion.textContent = "";
+            personer.forEach(person => {
+                console.log("Troende", person.troende);
+                if (filter == person.troende || filter == "alle" ) {
+                    const klon = template.cloneNode(true);
+                    klon.querySelector(".billede").src = medieurl + person.billede;
+                    klon.querySelector("h2").textContent = person.titel;
+                    klon.querySelector(".fornavn").textContent = person.navn;
+                    klon.querySelector(".efternavn").textContent = person.efternavn;
+                    klon.querySelector(".fødselsdag").textContent = person.fødselsdag;
+                    klon.querySelector(".hobby").textContent = person.hobby;
+                    klon.querySelector(".troende").textContent = person.troende;
+                    sektion.appendChild(klon);
+                }
+
+
+
+            })
+        }
+
+
+
+    </script>
+</body>
+
+
+
+</html>
